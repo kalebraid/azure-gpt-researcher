@@ -27,7 +27,7 @@ RUN useradd -ms /bin/bash gpt-researcher \
     && chown -R gpt-researcher:gpt-researcher /usr/src/app
 
 USER gpt-researcher
-
+COPY .env .env
 COPY --chown=gpt-researcher:gpt-researcher ./ ./
 
 EXPOSE 8000

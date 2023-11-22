@@ -4,7 +4,6 @@ from gpt_researcher.master.functions import *
 from gpt_researcher.context.compression import ContextCompressor
 from gpt_researcher.memory import Memory
 
-
 class GPTResearcher:
     """
     GPT Researcher
@@ -35,8 +34,10 @@ class GPTResearcher:
         Returns:
             Report
         """
+        print(f"🔎 Running research for '{self.cfg}'...")
         print(f"🔎 Running research for '{self.query}'...")
         # Generate Agent
+
         self.agent, self.role = await choose_agent(self.query, self.cfg)
         await stream_output("logs", self.agent, self.websocket)
 

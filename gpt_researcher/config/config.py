@@ -1,17 +1,31 @@
 # config file
 import json
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+
+AZURE_OPENAI_KEY = os.environ.get("AZURE_OPENAI_KEY")
+AZURE_OPENAI_ENDPOINT = os.environ.get("AZURE_OPENAI_ENDPOINT")
+OPENAI_API_VERSION = os.environ.get("OPENAI_API_VERSION") or "davinci"
 
 class Config:
     """Config class for GPT Researcher."""
 
     def __init__(self, config_file: str = None):
         """Initialize the config class."""
+        os.environ["OPENAI_API_TYPE"] = "azure"
+        os.environ["azure_endpoint"] = AZURE_OPENAI_ENDPOINT
+        os.environ["AZURE_OPENAI_ENDPOINT"] = AZURE_OPENAI_ENDPOINT
+        os.environ["OPENAI_API_KEY"] = AZURE_OPENAI_KEY
+        os.environ["OPENAI_API_VERSION"] = OPENAI_API_VERSION
+        os.environ["AZURE_OPENAI_KEY"] = AZURE_OPENAI_KEY
+
         self.config_file = config_file
         self.retriever = "tavily"
-        self.llm_provider = "ChatOpenAI"
-        self.fast_llm_model = "gpt-3.5-turbo-16k"
-        self.smart_llm_model = "gpt-4-1106-preview"
+        self.llm_provider = "AzureChatOpenAI"
+        self.fast_llm_model = "gpt-35-turbo-16k"
+        self.smart_llm_model = "gpt-4"
         self.fast_token_limit = 2000
         self.smart_token_limit = 4000
         self.browse_chunk_max_length = 8192
