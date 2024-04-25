@@ -126,3 +126,5 @@ Our view on unbiased research claims:
 ## ✉️ Support / Contact us
 - [Community Discord](https://discord.gg/spBgZmm3Xe)
 - Our email: support@tavily.com
+
+docker build . -t gpt-research

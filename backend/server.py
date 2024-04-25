@@ -35,6 +35,22 @@ def startup_event():
 async def read_root(request: Request):
     return templates.TemplateResponse('index.html', {"request": request, "report": None})
 
+@app.post("/research")
+async def start_research(request: ResearchRequest):
+    task = request.task
+    report_type = request.report_type
+    agent = request.agent
+
+    if task and report_type and agent:
+        websocket = manager.get_websocket()
+        if websocket:
+            await websocket.send_text(f"start {json.dumps({'task': task, 'report_type': report_type, 'agent': agent})}")
+            return {"message": "Research started successfully."}
+        else:
+            return {"message": "No available websocket connection."}
+    else:
+        return {"message": "Invalid request parameters."}
+
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
